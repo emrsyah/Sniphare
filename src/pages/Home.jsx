@@ -14,11 +14,11 @@ const Home = () => {
         <div className="relative overflow-hidden">
           <div className="h-32 w-32 bg-indigo-700 absolute blur-[100px]"></div>
           <div className="h-48 w-48 right-4 top-20 bg-indigo-700 absolute blur-[130px]"></div>
-          <div className="flex flex-col items-center justify-center my-24">
+          <div className="flex flex-col relative z-10 items-center justify-center my-24">
             <h1 className="text-6xl tracking-wide font-bold text-center">
               Developer Snippet Homebase
             </h1>
-            <p className="text-gray-300 mt-5 text-xl">
+            <p className="text-gray-300 mt-5 text-center text-xl">
               Where developer find and share their snippet, Share your snippet
               now.
             </p>
