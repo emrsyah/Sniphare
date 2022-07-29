@@ -1,8 +1,17 @@
 import React from 'react'
+import { Helmet } from 'react-helmet'
+import Navbar from '../components/Navbar'
 
 const Home = () => {
   return (
-    <div className='bg-blue-700 font-medium text-white'>Home</div>
+    <>
+    <Helmet>
+        <title>Sniphare - Where Developer Find and Share Their Snippets</title>
+    </Helmet>
+    <div>
+        <Navbar/>
+    </div>
+    </>
   )
 }
 

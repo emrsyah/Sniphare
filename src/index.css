@@ -1,3 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*{
+  font-family: "Inter", "Nunito";
+}
+
+
+@layer components {
+  .some{
+    @apply bg-gray-900 
+  }
+}
+
+body{
+  background-color: rgb(17 24 39);
+  color: #ffffff;
+}
+
+.nunito{
+  font-family: "Nunito";
+}
