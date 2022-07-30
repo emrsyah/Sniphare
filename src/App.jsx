@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Home from "./pages/Home";
 import "react-toastify/dist/ReactToastify.css";
+import Explore from "./pages/Explore";
 
 function App() {
   return (
@@ -10,7 +11,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
-          <Route path="snippet" element={<Home />} />
+          <Route path="snippet" element={<Explore />} />
           <Route path="snippet/:id" element={<Home />} />
           <Route path="user/:id" element={<Home />} />
           <Route path="tag" element={<Home />} />

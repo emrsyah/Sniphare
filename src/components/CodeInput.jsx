@@ -3,6 +3,11 @@ import { useState } from "react";
 import Highlight, { defaultProps } from "prism-react-renderer";
 import Editor from "react-simple-code-editor";
 import Select from "react-select";
+import { useForm } from "react-hook-form";
+import { auth, firestoreDb, googleProvider } from "../firebase";
+import { signInWithPopup } from "firebase/auth";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { useNavigate } from "react-router-dom";
 
 const languages = [
   { value: "markup", label: "markup" },
@@ -12,6 +17,7 @@ const languages = [
   { value: "cpp", label: "cpp" },
   { value: "css", label: "css" },
   { value: "javascript", label: "javascript" },
+  { value: "javascript", label: "java" },
   { value: "jsx", label: "jsx" },
   { value: "coffeescript", label: "coffeescript" },
   { value: "actionscript", label: "actionscript" },
@@ -28,6 +34,7 @@ const languages = [
   { value: "objectivec", label: "objectivec" },
   { value: "ocaml", label: "ocaml" },
   { value: "python", label: "python" },
+  { value: "jsx", label: "php" },
   { value: "reason", label: "reason" },
   { value: "sass", label: "sass" },
   { value: "scss", label: "scss" },
@@ -68,12 +75,16 @@ const customStyles = {
 };
 
 const CodeInput = () => {
+  const navigate = useNavigate()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [code, setCode] =
-    useState(`const sniphare = ["the", "homebase", "to", "share", "and", "collaborate"]
-  shiphare.map(s=>{
-    console.log(s)
-})`);
+    useState(``);
   const [selected, setSelected] = useState(languages[6]);
+  const user = auth.currentUser;
 
   const highlightCustom = (code) => (
     <Highlight {...defaultProps} code={code} language={selected.value}>
@@ -94,8 +105,33 @@ const CodeInput = () => {
     </Highlight>
   );
 
+  const submitHandler = async (data) => {
+    try {
+      if (!user) {
+        await signInWithPopup(auth, googleProvider);
+      }
+      await addDoc(collection(firestoreDb, "snippets"), {
+        userId: user.uid,
+        userProfile: user.photoURL,
+        userName: user.displayName ,
+        title: data.title,
+        result: data.result,
+        code: code,
+        language: selected.label,
+        like: 0,
+        createdAt: serverTimestamp()
+      })
+      navigate('me')
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
-    <form className="mx-8 mt-20 mb-2 flex flex-col gap-2 lg:mx-12 xl:mx-32">
+    <form
+      onSubmit={handleSubmit(submitHandler)}
+      className="mx-8 mt-20 mb-2 max-w-7xl lg:mx-auto flex flex-col gap-2 xl:mx-32 2xl:mx-auto"
+    >
       <Select
         styles={customStyles}
         options={languages}
@@ -106,20 +142,24 @@ const CodeInput = () => {
       <div className="flex items-center gap-2">
         <input
           type="text"
-          required
+          //   required
+          {...register("title", { required: true })}
           placeholder="Title - Required"
-          className="w-full outline-none py-2 px-4 bg-slate-800 border-[1px] border-gray-600 rounded text-sm"
+          className={`w-full outline-none py-2 px-4 bg-slate-800 border-[1px] border-gray-600 rounded text-sm ${
+            errors.title && "border-red-600"
+          } `}
         />
         <input
           type="text"
           placeholder="Result - Optional"
+          {...register("result")}
           className="w-full py-2 px-4 outline-none bg-slate-800 border-[1px] border-gray-600 rounded text-sm"
         />
       </div>
       <div className="">
         <Editor
           required
-          className="bg-slate-900 editor outline-none  text-white border-[1px] rounded border-white"
+          className="bg-slate-900 overflow-scroll editor outline-none  text-white border-[1px] rounded border-white"
           value={code}
           textareaId="codeArea"
           onValueChange={(code) => setCode(code)}
@@ -134,7 +174,10 @@ const CodeInput = () => {
         />
       </div>
       <div className="flex mt-1 justify-end">
-        <button type="submit" className="bg-indigo-600 font-medium py-2 px-6 rounded hover:bg-indigo-700">
+        <button
+          type="submit"
+          className="bg-indigo-600 font-medium py-2 px-6 rounded hover:bg-indigo-700"
+        >
           Create & Share
         </button>
       </div>
