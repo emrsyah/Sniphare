@@ -68,11 +68,15 @@ const customStyles = {
 };
 
 const CodeInput = () => {
-  const [code, setCode] = useState(`console.log("Hello World")`);
+  const [code, setCode] =
+    useState(`const sniphare = ["the", "homebase", "to", "share", "and", "collaborate"]
+  shiphare.map(s=>{
+    console.log(s)
+})`);
   const [selected, setSelected] = useState(languages[6]);
 
   const highlightCustom = (code) => (
-    <Highlight  {...defaultProps} code={code} language={selected.value}>
+    <Highlight {...defaultProps} code={code} language={selected.value}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre>
           {tokens.map((line, i) => (
@@ -80,7 +84,7 @@ const CodeInput = () => {
               <span className="editorLineNumber">{i + 1}</span>
               {line.map((token, key) => (
                 // <div className="">
-                    <span {...getTokenProps({ token, key })} />
+                <span {...getTokenProps({ token, key })} />
                 // </div>
               ))}
             </div>
@@ -91,7 +95,7 @@ const CodeInput = () => {
   );
 
   return (
-    <div className="mx-8 my-20 flex flex-col gap-2 lg:mx-12 xl:mx-32">
+    <form className="mx-8 mt-20 mb-2 flex flex-col gap-2 lg:mx-12 xl:mx-32">
       <Select
         styles={customStyles}
         options={languages}
@@ -100,19 +104,21 @@ const CodeInput = () => {
         onChange={(e) => setSelected(e)}
       />
       <div className="flex items-center gap-2">
-      <input
-        type="text"
-        placeholder="Title - Required"
-        className="w-full outline-none py-2 px-4 bg-slate-800 border-[1px] border-gray-600 rounded text-sm"
-      />
-          <input
-        type="text"
-        placeholder="Result - Optional"
-        className="w-full py-2 px-4 outline-none bg-slate-800 border-[1px] border-gray-600 rounded text-sm"
-      />
+        <input
+          type="text"
+          required
+          placeholder="Title - Required"
+          className="w-full outline-none py-2 px-4 bg-slate-800 border-[1px] border-gray-600 rounded text-sm"
+        />
+        <input
+          type="text"
+          placeholder="Result - Optional"
+          className="w-full py-2 px-4 outline-none bg-slate-800 border-[1px] border-gray-600 rounded text-sm"
+        />
       </div>
       <div className="">
         <Editor
+          required
           className="bg-slate-900 editor outline-none  text-white border-[1px] rounded border-white"
           value={code}
           textareaId="codeArea"
@@ -127,7 +133,12 @@ const CodeInput = () => {
           }}
         />
       </div>
-    </div>
+      <div className="flex mt-1 justify-end">
+        <button type="submit" className="bg-indigo-600 font-medium py-2 px-6 rounded hover:bg-indigo-700">
+          Create & Share
+        </button>
+      </div>
+    </form>
   );
 };
 

@@ -39,11 +39,12 @@ body{
 }
 
 .editor .editorLineNumber {
-  position: absolute;
-  left: 0px;
-  color: #cccccc;
-  text-align: right;
-  width: 15px;
+  position: absolute !important;
+  left: 5px !important;
+  color: #cccccc !important;
+  text-align: center !important;
+  width: 20px !important;
   font-weight: 100;
+  /* background-color: #cccccc; */
 }
 

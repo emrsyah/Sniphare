@@ -21,7 +21,10 @@ const Navbar = () => {
   return (
     <nav className="flex items-center px-10 py-4 justify-between border-b-[1px] border-gray-700">
       <Link to="/" className="text-xl nunito font-semibold">Sniphare🧁</Link>
-      <div className="flex items-center gap-3">
+      <div className="flex items-center gap-6">
+        <Link to="snippet" className="font-medium hover:text-indigo-500">
+          Explore
+        </Link>
         <button
         onClick={()=>loginHandler()}
         className="flex items-center gap-3 py-[6px] px-[10px] border-[1px] border-gray-500 rounded">

@@ -15,6 +15,7 @@ function App() {
           <Route path="user/:id" element={<Home />} />
           <Route path="tag" element={<Home />} />
           <Route path="tag/:id" element={<Home />} />
+          <Route path="search" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </>
