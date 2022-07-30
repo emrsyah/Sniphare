@@ -1,29 +1,36 @@
-import { collection, getDocs, orderBy, query, where } from "firebase/firestore";
+import {
+  collection,
+  endAt,
+  getDocs,
+  orderBy,
+  query,
+  startAt,
+  where,
+} from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
-import { useParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
-import { firestoreDb } from "../firebase";
-import { Icon } from "@iconify/react";
 import SnippetPost from "../components/SnippetPost";
+import { firestoreDb } from "../firebase";
 
-const Tag = () => {
-  const { id } = useParams();
-  const [snippets, setSnippets] = useState();
+const Search = () => {
+  const [queryParams] = useSearchParams();
   const [status, setStatus] = useState("loading");
+  const [snippets, setSnippets] = useState();
 
-  const getSnippets = async () => {
+  const getData = async () => {
     const ref = collection(firestoreDb, "snippets");
 
     const q = query(
       ref,
-      where("language", "==", id.toLowerCase()),
-      orderBy("createdAt", "desc")
+      orderBy("titleLower"),
+      startAt(queryParams.get("q").toLowerCase()),
+      endAt(queryParams.get("q").toLowerCase() + "\uf8ff")
     );
 
     const querySnapshot = await getDocs(q);
     if (querySnapshot.docs.length) {
-      console.log(querySnapshot.docs);
       setSnippets(querySnapshot.docs);
       setStatus("finished");
     } else {
@@ -34,7 +41,7 @@ const Tag = () => {
 
   useEffect(() => {
     try {
-      getSnippets();
+      getData();
     } catch (err) {
       console.error(err);
     }
@@ -43,24 +50,27 @@ const Tag = () => {
   return (
     <>
       <Helmet>
-        <title>Tag {id} | Sniphare</title>
+        <title>
+          Search {queryParams.get("q") ? queryParams.get("q") : ""} | Sniphare
+        </title>
       </Helmet>
       <div>
         <Navbar />
         <div className="max-w-7xl 2xl:mx-auto mx-14 my-12">
-          <div className="flex items-center gap-3">
-            <div className="p-2 bg-gray-800 rounded-lg">
-              <Icon icon="fluent:tag-24-regular" width={32} />
-            </div>
-            <h1 className="text-4xl font-semibold tracking-wide ">{id}</h1>
-          </div>
+          <h1 className="text-3xl font-semibold">
+            Search for {queryParams.get("q") ? queryParams.get("q") : ""}
+          </h1>
 
           {status === "loading" ? (
-            <div className="text-2xl text-gray-300 font-semibold mt-8">Loading...</div>
+            <div className="text-2xl text-gray-300 font-semibold mt-8">
+              Loading...
+            </div>
           ) : (
             <>
               {status === "no data" ? (
-                <div className="text-2xl text-gray-300 font-semibold mt-8">No Snippet For This Tag</div>
+                <div className="text-2xl text-gray-300 font-semibold mt-8">
+                  Sorry Snippet Is Not Found
+                </div>
               ) : (
                 <div className="w-full my-8 grid grid-cols-1 lg:grid-cols-2 gap-6">
                   {snippets.map((snippet) => (
@@ -74,10 +84,11 @@ const Tag = () => {
               )}
             </>
           )}
+
         </div>
       </div>
     </>
   );
 };
 
-export default Tag;
+export default Search;

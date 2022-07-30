@@ -103,7 +103,9 @@ const SnippetDetail = ({
       className="mt-3 text-2xl font-medium">{title}</h5>
       <div className="my-2 bg-slate-800 p-1 rounded relative scroll overflow-y-auto overflow-x-hidden">
         <div>{highlightCustom(code, syntax)}</div>
-        <div className="absolute right-1 bg-indigo-600 py-1 px-2 rounded top-1 font-medium text-sm">
+        <div 
+        onClick={()=>navigate(`/tag/${language}`)}
+        className="absolute right-1 cursor-pointer bg-indigo-600 py-1 px-2 rounded top-1 font-medium text-sm">
           {language}
         </div>
       </div>

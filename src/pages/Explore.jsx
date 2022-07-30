@@ -1,11 +1,11 @@
 import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
-import { Icon } from "@iconify/react";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import Navbar from "../components/Navbar";
 import { firestoreDb } from "../firebase";
 import SnippetPost from "../components/SnippetPost";
 import { useNavigate } from "react-router-dom";
+import SearchBar from "../components/SearchBar";
 
 const lang = [
   "Javascript",
@@ -50,14 +50,7 @@ const Explore = () => {
           <h1 className="text-4xl font-semibold">Find The Snippet You Need</h1>
 
           {/* Search Bar */}
-          <div className="flex items-center gap-1 bg-slate-800 px-4 rounded-sm border-[1px] border-gray-600 my-4">
-            <Icon icon="eva:search-fill" width={20} />
-            <input
-              type="text"
-              className="outline-none bg-transparent p-2 w-full"
-              placeholder="How to center a div in CSS"
-            />
-          </div>
+            <SearchBar />
 
           {/* Tag */}
           <div className="flex scroll items-center gap-3 overflow-auto pb-2">

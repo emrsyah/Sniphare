@@ -5,6 +5,7 @@ import "react-toastify/dist/ReactToastify.css";
 import Explore from "./pages/Explore";
 import Snippet from "./pages/Snippet";
 import Tag from "./pages/Tag";
+import Search from "./pages/Search";
 
 function App() {
   return (
@@ -18,7 +19,7 @@ function App() {
           <Route path="user/:id" element={<Home />} />
           {/* <Route path="tag" element={<Home />} /> */}
           <Route path="tag/:id" element={<Tag />} />
-          <Route path="search" element={<Home />} />
+          <Route path="search" element={<Search />} />
         </Routes>
       </BrowserRouter>
     </>

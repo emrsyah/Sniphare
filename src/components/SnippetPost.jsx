@@ -21,8 +21,7 @@ const SnippetPost = ({
   result,
   syntax,
 }) => {
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const highlightCustom = (code, lang) => (
     <Highlight {...defaultProps} code={code} language={lang}>
@@ -64,9 +63,7 @@ const SnippetPost = ({
           />
           <div className="flex flex-col">
             <h5 className="font-medium">{userName}</h5>
-            <p className="text-sm text-gray-400">
-              {dateConverter(createdAt)}
-            </p>
+            <p className="text-sm text-gray-400">{dateConverter(createdAt)}</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -100,11 +97,17 @@ const SnippetPost = ({
         </div>
       </div>
       <h5
-      onClick={()=>navigate(id)}
-      className="mt-2 text-xl font-medium cursor-pointer hover:text-indigo-500">{title}</h5>
+        onClick={() => navigate(`/snippet/${id}`)}
+        className="mt-2 text-xl font-medium cursor-pointer hover:text-indigo-500"
+      >
+        {title}
+      </h5>
       <div className="my-2 bg-slate-800 p-1 rounded relative max-h-32 scroll overflow-y-auto overflow-x-hidden">
         <div>{highlightCustom(code, syntax)}</div>
-        <div className="absolute right-1 bg-indigo-600 py-1 px-2 rounded top-1 font-medium text-sm">
+        <div
+          onClick={() => navigate(`/tag/${language}`)}
+          className="absolute right-1 cursor-pointer bg-indigo-600 py-1 px-2 rounded top-1 font-medium text-sm"
+        >
           {language}
         </div>
       </div>
