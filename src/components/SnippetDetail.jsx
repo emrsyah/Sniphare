@@ -7,7 +7,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { useNavigate } from "react-router-dom";
 dayjs.extend(relativeTime);
 
-const SnippetPost = ({
+const SnippetDetail = ({
   code,
   language,
   id,
@@ -52,17 +52,17 @@ const SnippetPost = ({
   };
 
   return (
-    <div className="col-span-1 flex flex-col bg-slate-900 border-[1px] border-gray-600 p-3 rounded">
+    <div className="col-span-1 flex flex-col bg-slate-900  p-3 rounded">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <img
             src={userProfile}
-            className="w-11 h-11 rounded-full border-2 border-indigo-500"
+            className="w-14 h-14 rounded-full border-2 border-indigo-500"
             alt="profile"
           />
           <div className="flex flex-col">
-            <h5 className="font-medium">{userName}</h5>
-            <p className="text-sm text-gray-400">
+            <h5 className="font-medium text-lg">{userName}</h5>
+            <p className=" text-gray-400">
               {dayjs(createdAt.toDate()).fromNow()}
             </p>
           </div>
@@ -76,9 +76,9 @@ const SnippetPost = ({
                 width={20}
               />
             ) : (
-              <Icon icon="ant-design:heart" width={20} />
+              <Icon icon="ant-design:heart" width={22} />
             )}
-            <p className="text-sm">{like}</p>
+            <p>{like}</p>
           </div>
           {/* <div className="p-2 border-[1px] border-gray-700 rounded flex items-center gap-2 cursor-pointer">
             <Icon icon="bi:bookmark" width={18} />
@@ -87,20 +87,19 @@ const SnippetPost = ({
             onClick={() => copyHandlerLink()}
             className="p-2 border-[1px] border-gray-700 hover:bg-slate-800 hover:text-indigo-500 rounded flex items-center gap-2 cursor-pointer"
           >
-            <Icon icon="bxs:share-alt" width={20} />
+            <Icon icon="bxs:share-alt" width={22} />
           </div>
           <div
             onClick={() => copyHandler()}
             className="p-2 border-[1px] border-gray-700 hover:bg-slate-800 hover:text-indigo-500 rounded flex items-center gap-2 cursor-pointer"
           >
-            <Icon icon="fluent:clipboard-16-regular" width={22} />
+            <Icon icon="fluent:clipboard-16-regular" width={24} />
           </div>
         </div>
       </div>
       <h5
-      onClick={()=>navigate(id)}
-      className="mt-2 text-xl font-medium cursor-pointer hover:text-indigo-500">{title}</h5>
-      <div className="my-2 bg-slate-800 p-1 rounded relative max-h-32 scroll overflow-y-auto overflow-x-hidden">
+      className="mt-3 text-2xl font-medium">{title}</h5>
+      <div className="my-2 bg-slate-800 p-1 rounded relative scroll overflow-y-auto overflow-x-hidden">
         <div>{highlightCustom(code, language)}</div>
         <div className="absolute right-1 bg-indigo-600 py-1 px-2 rounded top-1 font-medium text-sm">
           {language}
@@ -115,4 +114,4 @@ const SnippetPost = ({
   );
 };
 
-export default SnippetPost;
+export default SnippetDetail;

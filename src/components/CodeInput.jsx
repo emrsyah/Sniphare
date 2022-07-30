@@ -115,6 +115,7 @@ const CodeInput = () => {
         userProfile: user.photoURL,
         userName: user.displayName ,
         title: data.title,
+        titleLower: data.title.toLowerCase(),
         result: data.result,
         code: code,
         language: selected.label,

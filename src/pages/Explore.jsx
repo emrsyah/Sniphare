@@ -1,4 +1,4 @@
-import { collection, onSnapshot, query } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 import { Icon } from "@iconify/react";
 import React, { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
@@ -25,9 +25,9 @@ const Explore = () => {
   const [snippets, setSnippets] = useState();
 
   const getData = () => {
-    const q = query(collection(firestoreDb, "snippets"));
+    const q = query(collection(firestoreDb, "snippets"), orderBy("createdAt", "desc"));
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-      console.log(querySnapshot.docs);
+    //   console.log(querySnapshot.docs);
       setSnippets(querySnapshot.docs);
     });
     return unsubscribe;
@@ -70,7 +70,7 @@ const Explore = () => {
             {snippets && (
               <>
                 {snippets.map((snippet) => (
-                  <SnippetPost {...snippet?.data()} id={snippets?.id} />
+                  <SnippetPost {...snippet?.data()} id={snippet?.id} />
                 ))}
               </>
             )}
