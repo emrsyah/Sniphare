@@ -10,6 +10,11 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="snippet" element={<Home />} />
+          <Route path="snippet/:id" element={<Home />} />
+          <Route path="user/:id" element={<Home />} />
+          <Route path="tag" element={<Home />} />
+          <Route path="tag/:id" element={<Home />} />
         </Routes>
       </BrowserRouter>
     </>
