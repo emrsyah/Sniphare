@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useNavigate } from "react-router-dom";
+import dateConverter from "../helpers/dateConverter";
 dayjs.extend(relativeTime);
 
 const SnippetPost = ({
@@ -18,6 +19,7 @@ const SnippetPost = ({
   userId,
   like,
   result,
+  syntax,
 }) => {
 
   const navigate = useNavigate()
@@ -63,7 +65,7 @@ const SnippetPost = ({
           <div className="flex flex-col">
             <h5 className="font-medium">{userName}</h5>
             <p className="text-sm text-gray-400">
-              {dayjs(createdAt.toDate()).fromNow()}
+              {dateConverter(createdAt)}
             </p>
           </div>
         </div>
@@ -101,7 +103,7 @@ const SnippetPost = ({
       onClick={()=>navigate(id)}
       className="mt-2 text-xl font-medium cursor-pointer hover:text-indigo-500">{title}</h5>
       <div className="my-2 bg-slate-800 p-1 rounded relative max-h-32 scroll overflow-y-auto overflow-x-hidden">
-        <div>{highlightCustom(code, language)}</div>
+        <div>{highlightCustom(code, syntax)}</div>
         <div className="absolute right-1 bg-indigo-600 py-1 px-2 rounded top-1 font-medium text-sm">
           {language}
         </div>

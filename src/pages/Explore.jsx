@@ -5,6 +5,7 @@ import { Helmet } from "react-helmet";
 import Navbar from "../components/Navbar";
 import { firestoreDb } from "../firebase";
 import SnippetPost from "../components/SnippetPost";
+import { useNavigate } from "react-router-dom";
 
 const lang = [
   "Javascript",
@@ -15,7 +16,7 @@ const lang = [
   "Typescript",
   "Graphql",
   "Golang",
-  "C++",
+  "CPP",
   "SQL",
   "Git",
   "Bash",
@@ -23,6 +24,7 @@ const lang = [
 
 const Explore = () => {
   const [snippets, setSnippets] = useState();
+  const navigate = useNavigate()
 
   const getData = () => {
     const q = query(collection(firestoreDb, "snippets"), orderBy("createdAt", "desc"));
@@ -57,10 +59,12 @@ const Explore = () => {
             />
           </div>
 
-          {/* Topics */}
+          {/* Tag */}
           <div className="flex scroll items-center gap-3 overflow-auto pb-2">
             {lang.map((l) => (
-              <div className="py-[5px] px-5 cursor-pointer rounded-full bg-slate-800 hover:bg-slate-900 border-[1px] border-gray-600">
+              <div 
+              onClick={()=>navigate(`/tag/${l}`)}
+              className="py-[5px] px-5 cursor-pointer rounded-full bg-slate-800 hover:bg-slate-900 border-[1px] border-gray-600">
                 {l}
               </div>
             ))}
@@ -70,7 +74,7 @@ const Explore = () => {
             {snippets && (
               <>
                 {snippets.map((snippet) => (
-                  <SnippetPost {...snippet?.data()} id={snippet?.id} />
+                  <SnippetPost key={snippet?.id} {...snippet?.data()} id={snippet?.id} />
                 ))}
               </>
             )}

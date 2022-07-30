@@ -119,6 +119,7 @@ const CodeInput = () => {
         result: data.result,
         code: code,
         language: selected.label,
+        syntax: selected.value,
         like: 0,
         createdAt: serverTimestamp()
       })
