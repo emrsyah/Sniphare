@@ -2,8 +2,23 @@ import React from "react";
 import { Helmet } from "react-helmet";
 import Navbar from "../components/Navbar";
 import { Icon } from "@iconify/react";
+import { useNavigate } from "react-router-dom";
+import { signInWithPopup } from "firebase/auth";
+import { auth, googleProvider } from "../firebase";
+import { toast } from "react-toastify";
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const loginHandler = async () => {
+    try {
+      await signInWithPopup(auth, googleProvider);
+      toast.success("Success Login");
+      navigate("/me");
+    } catch (err) {
+      console.error(err);
+    }
+  };
   return (
     <>
       <Helmet>
@@ -22,7 +37,9 @@ const Home = () => {
               Where developer find and share their snippet, Share your snippet
               now.
             </p>
-            <button className="text-xl flex items-center gap-3 bg-indigo-600 hover:bg-indigo-700 py-3 px-6 mt-10 rounded font-medium">
+            <button 
+            onClick={()=>loginHandler()}
+            className="text-xl flex items-center gap-3 bg-indigo-600 hover:bg-indigo-700 py-3 px-6 mt-10 rounded font-medium">
               <p>Start Sharing</p>
               <Icon icon="akar-icons:arrow-right" />
             </button>
