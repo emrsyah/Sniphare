@@ -49,36 +49,39 @@ const customStyles = {
     // none of react-select's styles are passed to <Control />
     ...provided,
     backgroundColor: "#1e293b",
-    color: "white"
+    color: "white",
   }),
   input: (provided) => ({
     // none of react-select's styles are passed to <Control />
     ...provided,
-    color: "white"
+    color: "white",
   }),
   singleValue: (provided) => ({
     // none of react-select's styles are passed to <Control />
     ...provided,
-    color: "white"
+    color: "white",
   }),
   valueContainer: (provided) => ({
     ...provided,
-    color: "white"
-  })
+    color: "white",
+  }),
 };
 
 const CodeInput = () => {
   const [code, setCode] = useState(`console.log("Hello World")`);
+  const [selected, setSelected] = useState(languages[6]);
 
   const highlightCustom = (code) => (
-    <Highlight {...defaultProps} code={code} language="jsx">
+    <Highlight  {...defaultProps} code={code} language={selected.value}>
       {({ className, style, tokens, getLineProps, getTokenProps }) => (
         <pre>
           {tokens.map((line, i) => (
             <div {...getLineProps({ line, key: i })}>
               <span className="editorLineNumber">{i + 1}</span>
               {line.map((token, key) => (
-                <span {...getTokenProps({ token, key })} />
+                // <div className="">
+                    <span {...getTokenProps({ token, key })} />
+                // </div>
               ))}
             </div>
           ))}
@@ -88,25 +91,39 @@ const CodeInput = () => {
   );
 
   return (
-    <div className="mx-8 my-16 lg:mx-12 xl:mx-32">
+    <div className="mx-8 my-20 flex flex-col gap-2 lg:mx-12 xl:mx-32">
       <Select
         styles={customStyles}
         options={languages}
         placeholder="Select Language..."
+        value={selected}
+        onChange={(e) => setSelected(e)}
       />
-      <div className="my-2">
+      <div className="flex items-center gap-2">
+      <input
+        type="text"
+        placeholder="Title - Required"
+        className="w-full outline-none py-2 px-4 bg-slate-800 border-[1px] border-gray-600 rounded text-sm"
+      />
+          <input
+        type="text"
+        placeholder="Result - Optional"
+        className="w-full py-2 px-4 outline-none bg-slate-800 border-[1px] border-gray-600 rounded text-sm"
+      />
+      </div>
+      <div className="">
         <Editor
-          className="bg-slate-800 editor text-white border-[1px] rounded border-gray-600"
+          className="bg-slate-900 editor outline-none  text-white border-[1px] rounded border-white"
           value={code}
           textareaId="codeArea"
           onValueChange={(code) => setCode(code)}
-          // highlight={(code) => hightlightWithLineNumbers(code, languages.js)}
           highlight={(code) => highlightCustom(code)}
           padding={12}
           placeholder="Start write your code here"
           style={{
             fontFamily: '"Fira code", "Fira Mono", monospace',
             fontSize: 12,
+            // minHeight: 80,
           }}
         />
       </div>
