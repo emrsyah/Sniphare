@@ -1,4 +1,4 @@
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import {
   collection,
   onSnapshot,
@@ -13,6 +13,7 @@ import CodeInput from "../components/CodeInput";
 import Navbar from "../components/Navbar";
 import SnippetPost from "../components/SnippetPost";
 import { auth, firestoreDb } from "../firebase";
+import { Icon } from "@iconify/react";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -58,6 +59,15 @@ const Profile = () => {
     return unsubscribe;
   };
 
+  const logoutHandler = async () => {
+    try {
+      await signOut(auth);
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <>
       <Helmet>
@@ -68,17 +78,26 @@ const Profile = () => {
         <div className="max-w-7xl 2xl:mx-auto mx-14 my-10">
           <h1 className="text-3xl font-medium">My Profile</h1>
           <div className="my-6">
-            <div className="flex items-center gap-5">
-              <img
-                src={user?.userProfile}
-                alt="profile"
-                className="h-16 w-16 rounded-full"
-              />
-              <div>
-                <h2 className="text-3xl font-medium">{user?.userName}</h2>
-                <h2 className="text-lg text-slate-400 font-medium">
-                  {user?.userEmail}
-                </h2>
+            <div className="justify-between flex items-center">
+              <div className="flex items-start gap-5">
+                <img
+                  src={user?.userProfile}
+                  alt="profile"
+                  className="h-16 w-16 rounded-full"
+                />
+                <div>
+                  <h2 className="text-3xl font-medium">{user?.userName}</h2>
+                  <h2 className="text-lg text-slate-400 font-medium">
+                    {user?.userEmail}
+                  </h2>
+                </div>
+              </div>
+              <div
+                onClick={() => logoutHandler()}
+                className="flex items-center gap-2 py-2 px-5 text-gray-300 hover:text-red-500 cursor-pointer border-[1.3px] border-slate-800 hover:border-red-500 rounded-full bg-slate-800"
+              >
+                <Icon icon="ic:round-logout" width={28} />
+                <p className="text-xl font-medium">Logout</p>
               </div>
             </div>
             <div className="my-6">
@@ -93,15 +112,11 @@ const Profile = () => {
                 <>
                   <h5 className="text-xl text-gray-200">
                     {snippets.length > 0 ? (
-                      <>
-                      You Have {snippets.length} Snippet
-                      </> 
+                      <>You Have {snippets.length} Snippet</>
                     ) : (
-                      <>
-                      You dont have snippet yet, Lets create one
-                      </>
+                      <>You dont have snippet yet, Lets create one</>
                     )}
-                    </h5>
+                  </h5>
                   <div className="w-full my-4 grid grid-cols-1 lg:grid-cols-2 gap-6">
                     {snippets && (
                       <>

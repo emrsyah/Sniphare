@@ -28,6 +28,11 @@ function App() {
           userName: user.displayName,
         });
       }
+      setUser({
+        userId: "",
+        userProfile: "",
+        userName: "",
+      });
       setLoading(false);
     });
   }, []);
