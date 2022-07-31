@@ -6,6 +6,8 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import { useNavigate } from "react-router-dom";
 import dateConverter from "../helpers/dateConverter";
+import { doc, increment, updateDoc } from "firebase/firestore";
+import { firestoreDb } from "../firebase";
 dayjs.extend(relativeTime);
 
 const SnippetPost = ({
@@ -52,6 +54,12 @@ const SnippetPost = ({
     toast.success("Copy Link To Clipboard🗒️", { autoClose: 1500 });
   };
 
+  const addLikeHandler = async () => {
+    await updateDoc(doc(firestoreDb, "snippets", id), {
+      like: increment(1),
+    });
+  };
+
   return (
     <div className="col-span-1 flex flex-col bg-slate-900 border-[1px] border-gray-600 p-3 rounded">
       <div className="flex items-center justify-between">
@@ -67,7 +75,9 @@ const SnippetPost = ({
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <div className="p-2 border-[1px] hover:bg-slate-800 hover:text-indigo-500 border-gray-700 rounded flex items-center gap-2 cursor-pointer">
+          <div 
+          onClick={()=>addLikeHandler()}
+          className="p-2 border-[1px] hover:bg-slate-800 hover:text-indigo-500 border-gray-700 rounded flex items-center gap-2 cursor-pointer">
             {like > 0 ? (
               <Icon
                 icon="ant-design:heart-filled"
@@ -112,7 +122,7 @@ const SnippetPost = ({
         </div>
       </div>
       {result && (
-        <div className="p-2 bg-slate-800 rounded text-sm text-gray-300">
+        <div className="p-2 bg-slate-700 rounded text-sm text-gray-300">
           {result}
         </div>
       )}

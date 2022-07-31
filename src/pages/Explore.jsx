@@ -16,7 +16,7 @@ const lang = [
   "Typescript",
   "Graphql",
   "Golang",
-  "CPP",
+  "C++",
   "SQL",
   "Git",
   "Bash",
@@ -57,6 +57,7 @@ const Explore = () => {
             {lang.map((l) => (
               <div 
               onClick={()=>navigate(`/tag/${l}`)}
+              key={l}
               className="py-[5px] px-5 cursor-pointer rounded-full bg-slate-800 hover:bg-slate-900 border-[1px] border-gray-600">
                 {l}
               </div>
