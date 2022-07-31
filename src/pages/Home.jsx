@@ -50,8 +50,9 @@ const Home = () => {
             </div>
 
             {/* Code Input */}
-            <CodeInput />
-
+            <div className="mx-8 mt-20 mb-2 max-w-7xl lg:mx-auto  xl:mx-32 2xl:mx-auto">
+              <CodeInput />
+            </div>
           </div>
         </div>
       </div>

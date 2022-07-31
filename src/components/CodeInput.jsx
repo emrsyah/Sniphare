@@ -34,7 +34,7 @@ const languages = [
   { value: "objectivec", label: "objectivec" },
   { value: "ocaml", label: "ocaml" },
   { value: "python", label: "python" },
-  { value: "jsx", label: "php" },
+  { value: "javascript", label: "php" },
   { value: "reason", label: "reason" },
   { value: "sass", label: "sass" },
   { value: "scss", label: "scss" },
@@ -131,8 +131,8 @@ const CodeInput = () => {
 
   return (
     <form
+    className="flex flex-col gap-2"
       onSubmit={handleSubmit(submitHandler)}
-      className="mx-8 mt-20 mb-2 max-w-7xl lg:mx-auto flex flex-col gap-2 xl:mx-32 2xl:mx-auto"
     >
       <Select
         styles={customStyles}
@@ -178,7 +178,7 @@ const CodeInput = () => {
       <div className="flex mt-1 justify-end">
         <button
           type="submit"
-          className="bg-indigo-600 font-medium py-2 px-6 rounded hover:bg-indigo-700"
+          className="bg-indigo-600 font-medium py-2 w-full px-6 rounded hover:bg-indigo-700"
         >
           Create & Share
         </button>
