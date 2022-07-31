@@ -31,6 +31,7 @@ const SnippetDetail = ({
   const user = useRecoilValue(userState);
   const navigate = useNavigate();
   const setDelete = useSetRecoilState(deleteAtomState);
+  console.log(user)
 
   const highlightCustom = (code, lang) => (
     <Highlight {...defaultProps} code={code} language={lang}>

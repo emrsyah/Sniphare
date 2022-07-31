@@ -51,7 +51,7 @@ const Tag = () => {
             <div className="p-2 bg-gray-800 rounded-lg">
               <Icon icon="fluent:tag-24-regular" width={32} />
             </div>
-            <h1 className="text-4xl font-semibold tracking-wide ">{id}</h1>
+            <h1 className="text-4xl font-semibold tracking-wide ">{id} <span>{`(${snippets ? snippets.length : ""})`}</span></h1>
           </div>
 
           {status === "loading" ? (

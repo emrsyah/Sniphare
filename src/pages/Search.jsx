@@ -58,7 +58,7 @@ const Search = () => {
         <Navbar />
         <div className="max-w-7xl 2xl:mx-auto mx-14 my-12">
           <h1 className="text-3xl font-semibold">
-            Search for {queryParams.get("q") ? queryParams.get("q") : ""}
+            Search for {queryParams.get("q") ? queryParams.get("q") : ""} <span>{snippets && `(${snippets.length})`}</span>
           </h1>
 
           {status === "loading" ? (

@@ -78,6 +78,7 @@ const CodeInput = () => {
   const navigate = useNavigate()
   const {
     register,
+    setValue,
     handleSubmit,
     formState: { errors },
   } = useForm();
@@ -123,7 +124,10 @@ const CodeInput = () => {
         like: 0,
         createdAt: serverTimestamp()
       })
-      navigate('me')
+      navigate('/me')
+      setCode(``)
+      setValue('title', '')
+      setValue('result', "")
     } catch (err) {
       console.error(err);
     }

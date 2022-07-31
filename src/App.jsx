@@ -27,12 +27,13 @@ function App() {
           userProfile: user.photoURL,
           userName: user.displayName,
         });
+      } else {
+        setUser({
+          userId: "",
+          userProfile: "",
+          userName: "",
+        });
       }
-      setUser({
-        userId: "",
-        userProfile: "",
-        userName: "",
-      });
       setLoading(false);
     });
   }, []);

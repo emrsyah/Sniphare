@@ -29,7 +29,6 @@ function Snippet() {
   useEffect(() => {
     try {
       getSnippet();
-      console.log(user)
     } catch (err) {
       console.error(err);
     }
