@@ -23,7 +23,6 @@ const Tag = () => {
 
     const querySnapshot = await getDocs(q);
     if (querySnapshot.docs.length) {
-      console.log(querySnapshot.docs);
       setSnippets(querySnapshot.docs);
       setStatus("finished");
     } else {
